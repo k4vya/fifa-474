@@ -79,10 +79,11 @@ yScale = d3.scaleLinear().range ([height, 0]);
     var g = svg.append("g")
                .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
-d3.csv('chart_data.csv').then(function(dataset) { 
+d3.csv('chart_data_new.csv').then(function(dataset) { 
 //console.log(dataset);
     var nestedData = d3.nest()
     .key(function(c){
+        //console.log(c.nationality);
         return c.nationality;
     })
     .rollup(function(leaves) {
@@ -90,10 +91,11 @@ d3.csv('chart_data.csv').then(function(dataset) {
         
         //console.log(leaves[0].nationality + ', ' + leaves.length);
         return leaves.length;
+        
     })
     .entries(dataset);  
 
-    console.log(nestedData);
+    //console.log(nestedData);
 
 
     xScale.domain(nestedData.map(function(d) { return d.key}));
@@ -101,27 +103,54 @@ d3.csv('chart_data.csv').then(function(dataset) {
 
 
     g.append("g")
-         .attr("transform", "translate(0," + height + ")")
-         .call(d3.axisBottom(xScale));
+    .attr("id", "xaxis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale));
 
-        g.append("g")
-         .call(d3.axisLeft(yScale).tickFormat(function(d){
+    g.append("g")
+    .call(d3.axisLeft(yScale).tickFormat(function(d){
              return d;
-         }).ticks(10))
-         .append("text")
-         .attr("id", "vibes")
-         .attr("y", 6)
-         .attr("dy", "0.71em")
-         .attr("text-anchor", "end")
-         .text("value");
+    }).ticks(10))
+    .append("text")
+    .attr("y", 6)
+    .attr("dy", "0.71em")
+    .attr("text-anchor", "end")
+    .text("value");
 
-         g.selectAll(".bar")
-         .data(nestedData)
-         .enter().append("rect")
-         .attr("class", "bar")
-         .attr("x", function(d) { return xScale(d.key); })
-         .attr("y", function(d) { return yScale(d.value); })
-         .attr("width", xScale.bandwidth())
-         .attr("height", function(d) { return height - yScale(d.value); });
+    var bars = g.selectAll(".bar")
+    .data(nestedData)
+    .enter().append("rect")
+    .attr("class", "bar")
+    .attr('id', function(d){return d.key;})
+    .attr("x", function(d) { return xScale(d.key); })
+    .attr("y", function(d) { return yScale(d.value); })
+    .attr("width", xScale.bandwidth())
+    .attr("height", function(d) { return height - yScale(d.value); })
 
+  bars.selectAll('text')
+  .data(nestedData)
+  .enter()
+  .append('text')
+  .attr('id', 'q-label')
+  .attr('x', function(d) { return xScale(d.key); })
+  .attr("y", function(d) { return yScale(d.value) + 25; })
+  .text(function(d){return 'Number of Players: ' + d.value;})
+  
+
+    
 })
+
+svg.append('text')
+    .attr('class', 'title')
+    .attr('transform','translate(360,30)')
+    .text('Top Countries with Most Players');
+
+    svg.append('text')
+    .attr('class', 'label')
+    .attr('transform','translate(25,400) rotate(90)')
+    .text('Number of Players');
+
+    svg.append('text')
+    .attr('class', 'label')
+    .attr('transform','translate(500,790)')
+    .text('Country');

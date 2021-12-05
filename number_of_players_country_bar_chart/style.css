@@ -46,3 +46,26 @@ g:hover circle {
     fill-opacity: 100%;
 }
 
+#xaxis .tick { 
+    opacity: 100%;
+}
+
+g:hover #xaxis .tick .bar { 
+    opacity: 100%
+}
+
+#Argentina, #Brazil, #Chile, #Colombia { 
+    fill: #7f58af;
+}
+
+#Portugal, #England, #Germany, #Italy, #Spain, #Denmark, #Netherlands, #France, #Sweden, #Norway, #Poland, #Republic\ of\ Ireland { 
+ fill: #FEB326;
+}
+
+#China, #Japan { 
+    fill:#E84d8a;
+}
+
+#United\ States { 
+    fill:#64c5eb;
+}
