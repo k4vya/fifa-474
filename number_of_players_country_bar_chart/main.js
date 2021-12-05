@@ -127,22 +127,32 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
     .attr("width", xScale.bandwidth())
     .attr("height", function(d) { return height - yScale(d.value); })
 
-  bars.selectAll('text')
+  /*svg.selectAll('text')
   .data(nestedData)
   .enter()
   .append('text')
   .attr('id', 'q-label')
-  .attr('x', function(d) { return xScale(d.key); })
-  .attr("y", function(d) { return yScale(d.value) + 25; })
+  //.attr('x', function(d) { return xScale(d.key); })
+  //.attr("y", function(d) { return yScale(d.value) + 25; })
   .text(function(d){return 'Number of Players: ' + d.value;})
-  
+  */
+  svg.selectAll(".text")        
+  .data(nestedData)
+  .enter()
+  .append("text")
+  .attr("class","qlabel")
+ // .attr('id', function(d){return d.key;} )
+  .attr("x", (function(d) { return xScale(d.key) + 101; }  ))
+  .attr("y", function(d) { return yScale(d.value) + 105; })
+  .attr("dy", ".75em")
+  .text(function(d) { return d.value; });    
 
     
 })
 
 svg.append('text')
     .attr('class', 'title')
-    .attr('transform','translate(360,30)')
+    .attr('transform','translate(620,30)')
     .text('Top Countries with Most Players');
 
     svg.append('text')
@@ -152,5 +162,17 @@ svg.append('text')
 
     svg.append('text')
     .attr('class', 'label')
-    .attr('transform','translate(500,790)')
+    .attr('transform','translate(620,790)')
     .text('Country');
+
+   svg.select("#legend")
+
+    // Handmade legend
+    svg.append("circle").attr("cx",1000).attr("cy",130).attr("r", 6).style("fill", "#B29BCF")
+    svg.append("circle").attr("cx",1000).attr("cy",160).attr("r", 6).style("fill", "#FEB326")
+    svg.append("circle").attr("cx",1000).attr("cy",190).attr("r", 6).style("fill", "#E84d8a")
+    svg.append("circle").attr("cx",1000).attr("cy",220).attr("r", 6).style("fill", "#64c5eb")
+    svg.append("text").attr("x", 1020).attr("y", 130).text("South America").style("font-size", "12px").attr("alignment-baseline","middle").style("font-family", 'sans-serif')
+    svg.append("text").attr("x", 1020).attr("y", 160).text("Europe").style("font-size", "12px").attr("alignment-baseline","middle").style("font-family", 'sans-serif')
+    svg.append("text").attr("x", 1020).attr("y", 190).text("Asia").style("font-size", "12px").attr("alignment-baseline","middle").style("font-family", 'sans-serif')
+    svg.append("text").attr("x", 1020).attr("y", 220).text("North America").style("font-size", "12px").attr("alignment-baseline","middle").style("font-family", 'sans-serif')
