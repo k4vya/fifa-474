@@ -14,6 +14,17 @@
     <div>
         <svg id="legend" height=300 width=450></svg>
       </div>
+      <div id="select">
+        <label for="categorySelect">Show: </label>
+        <select class="custom-select" id="categorySelect" onchange="onCategoryChanged()">
+            <option selected value="all-letters">All Continents</option>
+            <option value="samerica">South America</option>
+            <option value="eur">Europe</option>
+            <option value="asia">Asia</option>
+            <option value="namerica">North America</option>
+            
+        </select>
+    </div>
 </body>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
