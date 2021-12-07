@@ -73,6 +73,7 @@ g:hover #xaxis .tick .bar {
     opacity:100;
     font-family: sans-serif;
     font-size: 12px;
+    justify-content: center;
 
 }
 
@@ -101,7 +102,17 @@ g:hover #xaxis .tick .bar {
 }
 
 #select { 
-    right: "1250px";
+    position:absolute;
+   top:50px;
+   right:500px;
 }
 
+label {
+    font-family: sans-serif;
+}
+
+.info { 
+    font-family: sans-serif;
+    padding: 2%;
+}
 

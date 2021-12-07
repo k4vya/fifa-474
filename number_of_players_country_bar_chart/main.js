@@ -44,15 +44,21 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
     })
     .rollup(function(leaves) {
         //var numPlayers = d3.count(leaves, d => d.sofifa_id); 
-        console.log(leaves[0].continent);
+        //console.log(leaves[0].continent);
+        var totalRating = d3.sum(leaves, function(c) { 
+            return c.overall;
+        })
+        //console.log(totalRating);
+        var avg = Math.round(totalRating/(leaves.length));
+        console.log(avg);
         //console.log(leaves[0].nationality + ', ' + leaves.length);
-        return {players: leaves.length, continent: leaves[0].continent};
+        return {players: leaves.length, continent: leaves[0].continent, avgRating : avg};
         
     })
     .entries(dataset);  
 
     //console.log(typeof nestedData);
-    console.log(nestedData[0]);
+    //console.log(nestedData[0]);
     
    for (let i = 0; i < nestedData.length; i++) { 
        all1.push(nestedData[i]);
@@ -132,7 +138,9 @@ function updateChart(filterKey) {
 
     //bind
     var bars = g.selectAll(".bar")
-    .data(filteredContinents)
+    .data(filteredContinents, function(d) { 
+        return d.key;
+    })
 
     //console.log(filteredContinents[0].value.players)
 
@@ -151,10 +159,10 @@ function updateChart(filterKey) {
   .append("text")
   .attr("id","qlabel")
  // .attr('id', function(d){return d.key;} )
-  .attr("x", (function(d) { return xScale(d.key) + 2; }  ))
-  .attr("y", function(d) { return yScale(d.value.players) - 10; })
+  .attr("x", (function(d) { return xScale(d.key) - xScale(d.key)/20 + 2; }  ))
+  .attr("y", function(d) { return yScale(d.value.players) - 14; })
   .attr("dy", ".75em")
-  .text(function(d) { return d.value.players; }); 
+  .text(function(d) { return ('Num players: ' + d.value.players +  ", \nAvg rating: " +  d.value.avgRating); }); 
   console.log(filteredContinents);
 
   // update 
@@ -178,7 +186,7 @@ function updateChart(filterKey) {
 svg.append('text')
     .attr('class', 'title')
     .attr('transform','translate(620,30)')
-    .text('Top Countries with Most Players - FIFA 2020');
+    .text('Top 20 Countries with Most Players - FIFA 2020');
 
     svg.append('text')
     .attr('class', 'label')
