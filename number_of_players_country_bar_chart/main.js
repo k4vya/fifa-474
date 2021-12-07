@@ -100,7 +100,7 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
 
     //console.log(continentSet['southAm']);
    
-    
+    updateChart('all')
 
     
 })
@@ -125,31 +125,53 @@ function updateChart(filterKey) {
    
     var filteredContinents = continentSet[filterKey];
     console.log(filteredContinents);
-    /*var filters = nestedData.filter(function(d) { 
-        return nestedData
-    })
+    //var filters = nestedData.filter(function(d) { 
+    //    return nestedData
+   // })
     //console.log(nestedData);
-    var bars = g.selectAll(".bar")
-    .data(nestedData)
 
-    var barsEnter = bars.enter().append("rect")
+    //bind
+    var bars = g.selectAll(".bar")
+    .data(filteredContinents)
+
+    //console.log(filteredContinents[0].value.players)
+
+    //enter
+   var barsEnter = bars.enter().append("g")
     .attr("class", "bar")
+
+    barsEnter.append('rect')
     .attr('id', function(d){return d.value.continent;})
     .attr("x", function(d) { return xScale(d.key); })
     .attr("y", function(d) { return yScale(d.value.players); })
     .attr("width", xScale.bandwidth())
     .attr("height", function(d) { return height - yScale(d.value.players); })
 
-  svg.selectAll(".text")        
-  .data(nestedData)
-  .enter()
+  barsEnter
   .append("text")
-  .attr("class","qlabel")
+  .attr("id","qlabel")
  // .attr('id', function(d){return d.key;} )
-  .attr("x", (function(d) { return xScale(d.key) + 101; }  ))
-  .attr("y", function(d) { return yScale(d.value.players) + 105; })
+  .attr("x", (function(d) { return xScale(d.key) + 2; }  ))
+  .attr("y", function(d) { return yScale(d.value.players) - 10; })
   .attr("dy", ".75em")
-  .text(function(d) { return d.value.players; });  */
+  .text(function(d) { return d.value.players; }); 
+  console.log(filteredContinents);
+
+  // update 
+  var playerBar = d3.select('g').selectAll('.bar rect') 
+  playerBar.attr('height', function(d) { 
+      return height - yScale(d.value.players);
+  })
+  .attr('width', xScale.bandwidth());
+
+  //exit
+  var bars = d3.select('g').selectAll('.bar')
+    .data(filteredContinents, function(d) { 
+        return d.key;
+    })
+    bars.exit().remove();
+    console.log(filteredContinents);
+
 }
 
 
