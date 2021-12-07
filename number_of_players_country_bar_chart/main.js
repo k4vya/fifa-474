@@ -3,6 +3,7 @@ function onCategoryChanged() {
     var select = d3.select('#categorySelect').node();
     // Get current value of select element
     var category = select.options[select.selectedIndex].value;
+    console.log(category);
     // Update chart with the selected category of letters
     updateChart(category);
 }
@@ -20,6 +21,20 @@ yScale = d3.scaleLinear().range ([height, 0]);
     var g = svg.append("g")
                .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
+    asia1 = [];
+    all1 = [];
+    eur1 = [];
+    northAm1 = [];
+    southAm1 = [];
+    var continentSet = { 
+        asia : {}, 
+        eur : {}, 
+        northAm : {}, 
+        southAm : {}, 
+        all : {}
+    }
+   
+
 d3.csv('chart_data_new.csv').then(function(dataset) { 
 
     var nestedData = d3.nest()
@@ -29,19 +44,40 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
     })
     .rollup(function(leaves) {
         //var numPlayers = d3.count(leaves, d => d.sofifa_id); 
-        
+        console.log(leaves[0].continent);
         //console.log(leaves[0].nationality + ', ' + leaves.length);
-        return leaves.length;
+        return {players: leaves.length, continent: leaves[0].continent};
         
     })
     .entries(dataset);  
 
-    console.log(nestedData);
+    //console.log(typeof nestedData);
+    console.log(nestedData[0]);
+    
+   for (let i = 0; i < nestedData.length; i++) { 
+       all1.push(nestedData[i]);
+        if (nestedData[i].value.continent == 'Asia') { 
+            asia1.push(nestedData[i])
+        } else if (nestedData[i].value.continent == 'Europe') {
+            eur1.push(nestedData[i]);
+        } else if (nestedData[i].value.continent == 'North America') {
+            northAm1.push(nestedData[i]);
+        } else if (nestedData[i].value.continent == 'South America') {
+            southAm1.push(nestedData[i]);
+        }
+    }
+    continentSet.all = all1;
+    continentSet.asia = asia1;
+    continentSet.eur = eur1;
+   continentSet.southAm = southAm1;
+   continentSet.northAm = northAm1;
+   // console.log(continentSet.southAm);
 
 
     xScale.domain(nestedData.map(function(d) { return d.key}));
-    yScale.domain([0, d3.max(nestedData, function(d){return d.value;})]);
+    yScale.domain([0, d3.max(nestedData, function(d){return d.value.players;})]);
 
+    //outside the d3 csv, initialize var dataset outside of it and assign it later 
 
     // add x axis
     g.append("g")
@@ -60,24 +96,49 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
     .attr("text-anchor", "end")
     .text("value");
 
-    //bind data 
-      
+    //updateChart(nestedData);
+
+    //console.log(continentSet['southAm']);
+   
+    
 
     
 })
 
 function updateChart(filterKey) { 
+    console.log('line 69 ' + filterKey);
+    /*
+    var filteredContinents = {};
+    if (filterKey == 'all') {
+        filteredContinents = continentSet.all;
+    } else if (filterKey == 'asia') {
+        filteredContinents = continentSet.asia;
+    } else if (filterKey == 'eur') {
+        filteredContinents = continentSet.eur;
+    } else if (filterKey == 'northAm') {
+        filteredContinents = continentSet.northAm;
+    } else if (filterKey == 'southAm') {
+        filteredContinents = continentSet.southAm;
+    }
+    console.log(filteredContinents);*/
     
+   
+    var filteredContinents = continentSet[filterKey];
+    console.log(filteredContinents);
+    /*var filters = nestedData.filter(function(d) { 
+        return nestedData
+    })
+    //console.log(nestedData);
     var bars = g.selectAll(".bar")
     .data(nestedData)
 
     var barsEnter = bars.enter().append("rect")
     .attr("class", "bar")
-    .attr('id', function(d){return d.key;})
+    .attr('id', function(d){return d.value.continent;})
     .attr("x", function(d) { return xScale(d.key); })
-    .attr("y", function(d) { return yScale(d.value); })
+    .attr("y", function(d) { return yScale(d.value.players); })
     .attr("width", xScale.bandwidth())
-    .attr("height", function(d) { return height - yScale(d.value); })
+    .attr("height", function(d) { return height - yScale(d.value.players); })
 
   svg.selectAll(".text")        
   .data(nestedData)
@@ -86,10 +147,11 @@ function updateChart(filterKey) {
   .attr("class","qlabel")
  // .attr('id', function(d){return d.key;} )
   .attr("x", (function(d) { return xScale(d.key) + 101; }  ))
-  .attr("y", function(d) { return yScale(d.value) + 105; })
+  .attr("y", function(d) { return yScale(d.value.players) + 105; })
   .attr("dy", ".75em")
-  .text(function(d) { return d.value; });  
+  .text(function(d) { return d.value.players; });  */
 }
+
 
 svg.append('text')
     .attr('class', 'title')

@@ -76,20 +76,20 @@ svg:hover .qlabel {
 
 }
 
-#Argentina, #Brazil, #Chile, #Colombia { 
+#South\ America { 
     fill: #B29BCF;
     
 }
 
-#Portugal, #England, #Germany, #Italy, #Spain, #Denmark, #Netherlands, #France, #Sweden, #Norway, #Poland, #R\.\ of\ Ireland { 
+#Europe { 
  fill: #FEB326;
 }
 
-#China, #Japan { 
+#Asia { 
     fill:#E84d8a;
 }
 
-#United\ States { 
+#North\ America { 
     fill:#64c5eb;
 }
 
