@@ -151,19 +151,20 @@ function updateChart(filterKey) {
     barsEnter.append('rect')
     .attr('id', function(d){return d.value.continent;})
     .attr("x", function(d) { return xScale(d.key); })
-    .attr("y", function(d) { return yScale(d.value.players); })
+    .attr("y", function(d) { return yScale(-650); })
     .attr("width", xScale.bandwidth())
     .attr("height", function(d) { return height - yScale(d.value.players); })
 
-  barsEnter
-  .append("text")
-  .attr("id","qlabel")
- // .attr('id', function(d){return d.key;} )
-  .attr("x", (function(d) { return xScale(d.key) - xScale(d.key)/20 + 2; }  ))
-  .attr("y", function(d) { return yScale(d.value.players) - 14; })
-  .attr("dy", ".75em")
-  .text(function(d) { return ('Num players: ' + d.value.players +  ", \nAvg rating: " +  d.value.avgRating); }); 
-  console.log(filteredContinents);
+    // add label
+    barsEnter
+    .append("text")
+    .attr("id","qlabel")
+    // .attr('id', function(d){return d.key;} )
+    .attr("x", (function(d) { return xScale(d.key) - xScale(d.key)/20 + 2; }  ))
+    .attr("y", function(d) { return yScale(d.value.players) - 14; })
+    .attr("dy", ".75em")
+    .text(function(d) { return ('Num players: ' + d.value.players +  ", \nAvg rating: " +  d.value.avgRating); }); 
+    console.log(filteredContinents);
 
   // update 
   var playerBar = d3.select('g').selectAll('.bar rect') 
@@ -179,6 +180,13 @@ function updateChart(filterKey) {
     })
     bars.exit().remove();
     console.log(filteredContinents);
+
+    svg.selectAll("rect")
+  .transition()
+  .duration(800)
+  .attr("y", function(d) { return yScale(d.value.players) })
+  .attr("height", function(d) { return height - yScale(d.value.players); })
+  .delay(function(d,i){ return(i*100)})
 
 }
 
