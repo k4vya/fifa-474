@@ -114,5 +114,11 @@ label {
 .info { 
     font-family: sans-serif;
     padding: 2%;
+    width: 1200px;
+
+}
+
+h3 {
+    color: #E84d8a;
 }
 
