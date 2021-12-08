@@ -67,4 +67,23 @@ d3.csv("chart_data_new.csv").then(function(data){
     svg.append('text')
         .attr('class', 'title')
         .attr('transform','translate(360,30)')
+        .style('font-weight', 'bold')
         .text('FIFA 2020 Player Age and Overall Rating');
+
+    svg.append("circle").attr("cx",830)
+        .attr("cy",130)
+        .attr("r", 6)
+        .style("fill", "#FFA500")
+    svg.append("circle").attr("cx",830)
+        .attr("cy",160)
+        .attr("r", 6)
+        .style("fill", "#30D5C8")
+    svg.append("text").attr("x", 850).attr("y", 130).text("Players Under 30")
+        .style("font-size", "12px")
+        .attr("alignment-baseline","middle")
+        .style("font-family", 'sans-serif')
+    svg.append("text").attr("x", 850).attr("y", 160).text("Players Over 30")
+        .style("font-size", "12px")
+        .attr("alignment-baseline","middle")
+        .style("font-family", 'sans-serif')
+        

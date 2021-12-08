@@ -15,6 +15,7 @@ text.label {
 
 .axis text {
     fill: #555;
+    opacity: 1;
 }
 
 .axis line,
