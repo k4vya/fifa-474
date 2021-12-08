@@ -37,10 +37,6 @@ text.title {
     fill: #333;
 }
 
-circle { 
-    fill-opacity:100%;
-    fill: darkcyan;
-}
 
 #name-label { 
     opacity: 0%;

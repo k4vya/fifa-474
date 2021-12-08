@@ -39,27 +39,19 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
 
     var nestedData = d3.nest()
     .key(function(c){
-        //console.log(c.nationality);
         return c.nationality;
     })
     .rollup(function(leaves) {
-        //var numPlayers = d3.count(leaves, d => d.sofifa_id); 
-        //console.log(leaves[0].continent);
         var totalRating = d3.sum(leaves, function(c) { 
             return c.overall;
         })
-        //console.log(totalRating);
         var avg = Math.round(totalRating/(leaves.length));
         console.log(avg);
-        //console.log(leaves[0].nationality + ', ' + leaves.length);
         return {players: leaves.length, continent: leaves[0].continent, avgRating : avg};
         
     })
     .entries(dataset);  
 
-    //console.log(typeof nestedData);
-    //console.log(nestedData[0]);
-    
    for (let i = 0; i < nestedData.length; i++) { 
        all1.push(nestedData[i]);
         if (nestedData[i].value.continent == 'Asia') { 
@@ -77,7 +69,6 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
     continentSet.eur = eur1;
    continentSet.southAm = southAm1;
    continentSet.northAm = northAm1;
-   // console.log(continentSet.southAm);
 
 
     xScale.domain(nestedData.map(function(d) { return d.key}));
@@ -102,10 +93,6 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
     .attr("text-anchor", "end")
     .text("value");
 
-    //updateChart(nestedData);
-
-    //console.log(continentSet['southAm']);
-   
     updateChart('all')
 
     
@@ -113,28 +100,8 @@ d3.csv('chart_data_new.csv').then(function(dataset) {
 
 function updateChart(filterKey) { 
     console.log('line 69 ' + filterKey);
-    /*
-    var filteredContinents = {};
-    if (filterKey == 'all') {
-        filteredContinents = continentSet.all;
-    } else if (filterKey == 'asia') {
-        filteredContinents = continentSet.asia;
-    } else if (filterKey == 'eur') {
-        filteredContinents = continentSet.eur;
-    } else if (filterKey == 'northAm') {
-        filteredContinents = continentSet.northAm;
-    } else if (filterKey == 'southAm') {
-        filteredContinents = continentSet.southAm;
-    }
-    console.log(filteredContinents);*/
-    
-   
     var filteredContinents = continentSet[filterKey];
-    console.log(filteredContinents);
-    //var filters = nestedData.filter(function(d) { 
-    //    return nestedData
-   // })
-    //console.log(nestedData);
+
 
     //bind
     var bars = g.selectAll(".bar")
@@ -142,7 +109,6 @@ function updateChart(filterKey) {
         return d.key;
     })
 
-    //console.log(filteredContinents[0].value.players)
 
     //enter
    var barsEnter = bars.enter().append("g")
@@ -159,7 +125,6 @@ function updateChart(filterKey) {
     barsEnter
     .append("text")
     .attr("id","qlabel")
-    // .attr('id', function(d){return d.key;} )
     .attr("x", (function(d) { return xScale(d.key) - xScale(d.key)/20 + 2; }  ))
     .attr("y", function(d) { return yScale(d.value.players) - 14; })
     .attr("dy", ".75em")
