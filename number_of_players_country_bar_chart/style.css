@@ -6,6 +6,9 @@ body {
     margin: 10px 20px;
 }
 
+div{
+    display: inline-block;
+}
 text.label {
     text-anchor: middle;
     font-size: 11px;
@@ -109,12 +112,11 @@ label {
 
 .info { 
     font-family: sans-serif;
-    padding: 2%;
-    width: 1200px;
-
+    padding: 0%;
+    width: 200px;
+    position: fixed;
 }
 
 h3 {
     color: #E84d8a;
 }
-

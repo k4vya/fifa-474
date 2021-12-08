@@ -128,7 +128,7 @@ function updateChart(filterKey) {
     .attr("x", (function(d) { return xScale(d.key) - xScale(d.key)/20 + 2; }  ))
     .attr("y", function(d) { return yScale(d.value.players) - 14; })
     .attr("dy", ".75em")
-    .text(function(d) { return ('Num players: ' + d.value.players +  ", \nAvg rating: " +  d.value.avgRating); }); 
+    .text(function(d) { return ('Num players: ' + d.value.players +  ", \nAvg rating: " +  d.value.avgRating); })
     console.log(filteredContinents);
 
   // update 
