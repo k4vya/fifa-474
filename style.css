@@ -101,7 +101,7 @@ g:hover #xaxis .tick .bar {
 }
 
 #select { 
-    position:absolute;
+   position:absolute;
    top:50px;
    right:500px;
 }
@@ -119,4 +119,17 @@ label {
 
 h3 {
     color: #E84d8a;
+}
+
+
+#scatterplot {
+    margin: 10px 20px;
+}
+
+g text {
+    opacity: 0;
+}
+
+g:hover text {
+    opacity: 1;
 }
