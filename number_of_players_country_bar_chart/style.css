@@ -102,8 +102,8 @@ g:hover #xaxis .tick .bar {
 
 #select { 
     position:absolute;
-   top:50px;
-   right:500px;
+   top:40px;
+   left:1015px;
 }
 
 label {
