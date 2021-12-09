@@ -40,3 +40,14 @@ g:hover text {
 g:hover circle {
     opacity: 1;
 }
+
+.warning { 
+    font-family: sans-serif;
+    padding: 0%;
+    width: 400px;
+    position: relative;
+}
+
+h3 {
+    color: #E84d8a;
+}
